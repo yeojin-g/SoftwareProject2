@@ -79,14 +79,6 @@ def showScoreDB(scdb, keyname):
             print(attr + "=" + p[attr], end=' ')
         print()
 
-def findScoreDB(scdb, name):
-    for p in scdb:
-        if p['Name'] == name:
-            for i in p:
-                print(i + "=" + p[i], end=' ')
-            print()
-
-
 
 
 
