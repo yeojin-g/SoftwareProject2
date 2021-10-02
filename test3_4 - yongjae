@@ -43,14 +43,10 @@ def doScoreDB(scdb):#2
             record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
             scdb += [record]
 
-        elif parse[0] == 'del':
-            count = 1
-            while count >= 1:
-                count = 0
-                for p in scdb:
-                    if p['Name'] == parse[1]:
-                        count += 1
-                        scdb.remove(p)
+        elif parse[0] == 'del': #이슈2 해결
+            for p in scdb[::-1]:
+                if p['Name'] == parse[1]:
+                    scdb.remove(p)
 
 
         elif parse[0] == 'show':
@@ -59,26 +55,21 @@ def doScoreDB(scdb):#2
 
         elif parse[0] == 'find':
             try:
-                for i in scdb:
-                    for j in i:
-                        if j == "Name":
-                            if i[j] == parse[1]:
-                                print(i)
+                for i in scdb: #이슈1 해결
+                    if i["Name"] == parse[1]:
+                        print(i)
+
             except:
                 print("아래 이름들중 입력 바랍니다")
-                for i in scdb:
-                    for j in i:
-                        if j == "Name":
-                            print(i[j])
+                for i in scdb: #이슈3 해결
+                    print(i["Name"])
                 continue
 
         elif parse[0] == 'inc':
             try:
-                for i in scdb:
-                    for j in i:
-                        if j == "Name":
-                            if i[j] == parse[1]:
-                                i['Score'] = str(int(i['Score']) + int(parse[2]))
+                for i in scdb: #이슈4 해결
+                    if i["Name"] == parse[1]:
+                        i['Score'] = str(int(i['Score']) + int(parse[2]))
             except:
                 continue
 
