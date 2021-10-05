@@ -32,9 +32,13 @@ def doScoreDB(scdb):
         inputstr = (input("Score DB > "))
         if inputstr == "": continue
         parse = inputstr.split(" ")
+        
         if parse[0] == 'add':
-            record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
-            scdb += [record]
+            if len(parse) == 4:
+                record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
+                scdb += [record]
+            else:
+                print("Please enter name, age, score")
 
         elif parse[0] == 'del':
             if len(parse) == 2:
