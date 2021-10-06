@@ -44,7 +44,7 @@ def doScoreDB(scdb):
             if len(parse) != 2:
                 print("Enter 'del name'")
             else:
-                for p in scdb:
+                for p in scdb[:]:
                     if p['Name'] == parse[1]:
                         scdb.remove(p)
 
@@ -62,12 +62,9 @@ def doScoreDB(scdb):
             if len(parse) != 2:
                 print("Enter 'find name'")
             else:
-                for p in scdb:
-                    if p['Name'] == parse[1]:
-                        for i in p:
-                            print(i + "=" + p[i], end=' ')
-                        print()
-
+                found = list(filter(lambda x : x["Name"] == parse[1], scdb))
+                showScoreDB(found, 'Name')
+                
         elif parse[0] == 'inc':
             if len(parse) != 3:
                 print("Enter 'inc name amount'")
