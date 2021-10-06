@@ -39,15 +39,20 @@ def doScoreDB(scdb):#2
 
         parse = inputstr.split(" ")
 
-        if parse[0] == 'add':
-            record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
-            scdb += [record]
+        if parse[0] == 'add': #이슈6 해결
+            try:
+                record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
+                scdb += [record]
+            except:
+                continue
 
-        elif parse[0] == 'del': #이슈2 해결
-            for p in scdb[::-1]:
-                if p['Name'] == parse[1]:
-                    scdb.remove(p)
-
+        elif parse[0] == 'del': #이슈2,6 해결
+            try:
+                for p in scdb[::-1]:
+                    if p['Name'] == parse[1]:
+                        scdb.remove(p)
+            except:
+                continue
 
         elif parse[0] == 'show':
             sortKey ='Name' if len(parse) == 1 else parse[1]
@@ -55,9 +60,17 @@ def doScoreDB(scdb):#2
 
         elif parse[0] == 'find':
             try:
+                find_count = 0
                 for i in scdb: #이슈1 해결
                     if i["Name"] == parse[1]:
                         print(i)
+                        find_count += 1
+
+                if find_count == 0: #이슈5 해결
+                    print("아래 이름들중 입력 바랍니다")
+                    for i in scdb:
+                        print(i["Name"])
+                    continue
 
             except:
                 print("아래 이름들중 입력 바랍니다")
