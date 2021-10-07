@@ -1,0 +1,35 @@
+import time
+n = int(input("n:"))
+def fibo_iterative(n):
+    answer = 0
+    fibo1 = 1
+    fibo2 = 1
+    fibo3 = 2
+    if n <= 2:
+        answer = 1
+    elif n == 3:
+        answer = 2
+    else:
+        for i in range(n-3):
+            fibo3, fibo2 = fibo3 + fibo2, fibo3
+        answer = fibo3
+    return answer
+
+def fibo_recursive(n):
+    if n <= 2:
+        return 1
+    return fibo_recursive(n-1) + fibo_recursive(n-2)
+
+interative_start_time = time.time()
+fibo_iterative(n)
+interative_end_time = time.time()
+interative_time = interative_end_time - interative_start_time
+
+recursive_start_time = time.time()
+fibo_recursive(n)
+recursive_end_time = time.time()
+recursive_time = recursive_end_time - recursive_start_time
+
+print("n =",n)
+print("interative_time :",interative_time)
+print("recursive_time :", recursive_time)
