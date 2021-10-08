@@ -1,22 +1,23 @@
 import time
 n = int(input("n:"))
 def fibo_iterative(n):
-    answer = 0
+    answer = 0 # 이슈10 해결
+    fibo0 = 0
     fibo1 = 1
-    fibo2 = 1
-    fibo3 = 2
-    if n <= 2:
+    if n == 0: #이슈8 해결
+        answer = 0
+    elif n <= 2:
         answer = 1
-    elif n == 3:
-        answer = 2
     else:
-        for i in range(n-3):
-            fibo3, fibo2 = fibo3 + fibo2, fibo3
-        answer = fibo3
+        for i in range(n-1):
+            fibo1, fibo0 = fibo1 + fibo0, fibo1
+        answer = fibo1
     return answer
 
 def fibo_recursive(n):
-    if n <= 2:
+    if n == 0: # 이슈 11 해결
+        return 0
+    elif n <= 2:
         return 1
     return fibo_recursive(n-1) + fibo_recursive(n-2)
 
@@ -30,6 +31,6 @@ fibo_recursive(n)
 recursive_end_time = time.time()
 recursive_time = recursive_end_time - recursive_start_time
 
-print("n =",n)
+print("n={}일때 피보나치수 ->".format(n),fibo_iterative(n)) #이슈9 해결
 print("interative_time :",interative_time)
 print("recursive_time :", recursive_time)
