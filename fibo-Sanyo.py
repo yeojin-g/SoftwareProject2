@@ -3,11 +3,9 @@ import time
 
 def fibo_iter(n):
     num1, num2 = 0, 1
-    answer = 1
     for i in range(n-1):
-        answer = num1 + num2
-        num1, num2 = num2, answer
-    return answer
+        num1, num2 = num2, num1+num2
+    return num1+num2
 
 def fibo_rec(n):
     if n <= 1:
