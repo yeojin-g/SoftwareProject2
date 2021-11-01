@@ -45,7 +45,7 @@ class ScoreDB(QWidget):
         key = QLabel('Key:')
         hbox2.addWidget(key)
         self.keyCombo = QComboBox()
-        self.keyCombo.addItem('Name') #Combo Item 추가
+        self.keyCombo.addItem('Name')  # Combo Item 추가
         self.keyCombo.addItem('Age')
         self.keyCombo.addItem('Score')
         hbox2.addWidget(self.keyCombo)
@@ -126,7 +126,7 @@ class ScoreDB(QWidget):
         amountText = self.amountEdit.text()
         for p in self.scoredb:
             if p['Name'] == nameText:
-                p['Score'] = str(int(p['Score']) + int(amountText))
+                p['Score'] = int(p['Score']) + int(amountText)
         self.showScoreDB()
 
     def button_show_clicked(self):
