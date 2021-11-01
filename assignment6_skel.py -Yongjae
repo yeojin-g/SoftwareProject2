@@ -17,7 +17,7 @@ class ScoreDB(QWidget):
         self.showScoreDB()
 
     def initUI(self):
-        self.setGeometry(300, 300, 500, 250)
+        self.setGeometry(300, 300, 500, 400)
         self.setWindowTitle('Assignment6')
 
         self.name = QLabel("Name:",self)
@@ -87,7 +87,7 @@ class ScoreDB(QWidget):
         self.result.move(10,90)
         self.resultText = QTextEdit(self)
         self.resultText.move(10,110)
-        self.resultText.resize(480,130)
+        self.resultText.resize(480,280)
 
         self.show()
 
@@ -102,7 +102,7 @@ class ScoreDB(QWidget):
             return
 
         try:
-            self.scoredb =  pickle.load(fH)
+            self.scoredb = pickle.load(fH)
         except:
             pass
         else:
@@ -117,56 +117,72 @@ class ScoreDB(QWidget):
         fH.close()
 
     def showScoreDB(self):
-        self.keyText = self.keyBox.currentText()
-        tempText = ""
-        for p in sorted(self.scoredb, key=lambda person: person[self.keyText]):
-            for attr in sorted(p):
-                tempText = tempText + attr + "=" + str(p[attr]) + " "
-            tempText += "\n"
-        self.resultText.setText(tempText)
+        try:
+            self.keyText = self.keyBox.currentText()
+            tempText = ""
+            for p in sorted(self.scoredb, key=lambda person: person[self.keyText]):
+                for attr in sorted(p):
+                    tempText = tempText + attr + "=" + str(p[attr]) + " "
+                tempText += "\n"
+            self.resultText.setText(tempText)
+        except:
+            self.resultText.setText("show error")
 
 
     def addScoreDB(self):
-        tempdic = {}
-        self.nameText = self.nameEdit.text()
-        self.ageText = self.ageEdit.text()
-        self.scoreText = self.scoreEdit.text()
-        if self.nameText == "" or self.ageText == "" or self.scoreText == "":
-            pass
-        tempdic["Name"] = self.nameText
-        tempdic["Age"] = self.ageText
-        tempdic["Score"] = self.scoreText
-        self.scoredb.append(tempdic)
-        self.showScoreDB()
+        try:
+            tempdic = {}
+            self.nameText = self.nameEdit.text()
+            self.ageText = self.ageEdit.text()
+            self.scoreText = self.scoreEdit.text()
+            if self.nameText == "" or self.ageText == "" or self.scoreText == "":
+                pass
+            if (self.ageText.isdigit() and self.scoreText.isdigit()):
+                tempdic["Name"] = self.nameText
+                tempdic["Age"] = self.ageText
+                tempdic["Score"] = self.scoreText
+                self.scoredb.append(tempdic)
+                self.showScoreDB()
+        except:
+            self.resultText.setText("add error")
+
 
     def delScoreDB(self):
-        self.nameText = self.nameEdit.text()
-        for i in self.scoredb[::-1]:
-            if i["Name"] == self.nameText:
-                self.scoredb.remove(i)
-        self.showScoreDB()
+        try:
+            self.nameText = self.nameEdit.text()
+            for i in self.scoredb[::-1]:
+                if i["Name"] == self.nameText:
+                    self.scoredb.remove(i)
+            self.showScoreDB()
+        except:
+            self.resultText.setText("del error")
 
     def findScoreDB(self):
-        self.nameText = self.nameEdit.text()
-        tempText = ""
-        for i in self.scoredb:
-            if i["Name"] == self.nameText:
-                for j in i:
-                    tempText = tempText + j + "=" + str(i[j]) + " "
-                tempText += "\n"
-        self.resultText.setText(tempText)
+        try:
+            self.nameText = self.nameEdit.text()
+            tempText = ""
+            for i in self.scoredb:
+                if i["Name"] == self.nameText:
+                    for j in i:
+                        tempText = tempText + j + "=" + str(i[j]) + " "
+                    tempText += "\n"
+            self.resultText.setText(tempText)
+        except:
+            self.resultText.setText("find error")
 
     def incScoreDB(self):
-        self.nameText = self.nameEdit.text()
-        self.amountText = self.amountEdit.text()
-        for i in self.scoredb:
-            if i["Name"] == self.nameText:
-                i["Score"] = str(int(i["Score"])+int(self.amountText))
-        self.showScoreDB()
+        try:
+            self.nameText = self.nameEdit.text()
+            self.amountText = self.amountEdit.text()
+            for i in self.scoredb:
+                if i["Name"] == self.nameText:
+                    i["Score"] = str(int(i["Score"])+int(self.amountText))
+            self.showScoreDB()
+        except:
+            self.resultText.setText("inc error")
 
 
-if __name__ == '__main__':    
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = ScoreDB()
     sys.exit(app.exec_())
-
