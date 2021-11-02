@@ -93,7 +93,7 @@ class ScoreDB(QWidget):
 
         self.setLayout(vbox)
         self.setGeometry(300, 300, 500, 250)
-        self.setWindowTitle('Assignment6')    
+        self.setWindowTitle('Assignment6')
         self.show()
 
     def closeEvent(self, event):
@@ -166,8 +166,7 @@ class ScoreDB(QWidget):
         self.showScoreDB()
 
 
-if __name__ == '__main__':    
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = ScoreDB()
     sys.exit(app.exec_())
-
