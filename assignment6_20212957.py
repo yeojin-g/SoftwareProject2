@@ -101,9 +101,20 @@ class ScoreDB(QWidget):
         nameText = self.nameEdit.text()
         ageText = self.ageEdit.text()
         scoreText = self.scoreEdit.text()
-        record = {'Name': nameText, 'Age': int(ageText), 'Score': int(scoreText)}
-        self.scoredb += [record]
-        self.showScoreDB()
+        # 에러처리
+        if nameText == '':
+            self.resultEdit.clear()
+            self.resultEdit.append("name 값을 확인해주세요")
+        elif (ageText == '') or (not(ageText.isnumeric())):
+            self.resultEdit.clear()
+            self.resultEdit.append("age 값을 확인해주세요")
+        elif (scoreText == '') or (not(scoreText.isnumeric())):
+            self.resultEdit.clear()
+            self.resultEdit.append("score 값을 확인해주세요")
+        else:
+            record = {'Name': nameText, 'Age': int(ageText), 'Score': int(scoreText)}
+            self.scoredb += [record]
+            self.showScoreDB()
 
     def button_del_clicked(self):
         nameText = self.nameEdit.text()
@@ -118,16 +129,20 @@ class ScoreDB(QWidget):
         self.resultEdit.clear()
         for p in found:
             for attr in sorted(p):
-                self.resultEdit.insertPlainText(attr + "=" + str(p[attr]) + "\t")
+                self.resultEdit.insertPlainText(attr + "=" + str(p[attr]) + "\t\t")
             self.resultEdit.insertPlainText("\n")
-
+        
     def button_inc_clicked(self):
         nameText = self.nameEdit.text()
         amountText = self.amountEdit.text()
-        for p in self.scoredb:
-            if p['Name'] == nameText:
-                p['Score'] = int(p['Score']) + int(amountText)
-        self.showScoreDB()
+        if amountText.isnumeric():
+            for p in self.scoredb:
+                if p['Name'] == nameText:
+                    p['Score'] = int(p['Score']) + int(amountText)
+            self.showScoreDB()
+        else:
+            self.resultEdit.clear()
+            self.resultEdit.append("amount 값을 확인해주세요")
 
     def button_show_clicked(self):
         self.showScoreDB()
@@ -160,7 +175,7 @@ class ScoreDB(QWidget):
         keyName = self.keyCombo.currentText()
         for p in sorted(self.scoredb, key=lambda person: person[keyName]):
             for attr in sorted(p):
-                self.resultEdit.insertPlainText(attr + "=" + str(p[attr]) + "\t")
+                self.resultEdit.insertPlainText(attr + "=" + str(p[attr]) + "\t\t")
             self.resultEdit.insertPlainText("\n")
 
 
