@@ -79,5 +79,7 @@ def romanToDec(numStr):
                     break
     if temp in romans.keys():
         n += romans[temp]
+    elif temp != '':
+        n = 'Error'
     return n
 
